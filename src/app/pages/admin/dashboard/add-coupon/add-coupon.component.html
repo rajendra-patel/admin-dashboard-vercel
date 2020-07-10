@@ -1,0 +1,388 @@
+<div class="modal-header">
+    <h4 class="modal-title">Add Coupon</h4>
+    <button type="button" class="close" aria-label="Close"
+     (click)="activeModal.dismiss('Cross click')">
+     <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+    <div class="modal-boy">
+      <div class="container">
+        <div class="row col">
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="name">Coupon Name (Customers will not see)</label>
+                        <input type="text" class="form-control" id="name" formControlName="name">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="description">Coupon Description</label>
+                        <textarea id="description" class="form-control" formControlName="description"></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="redemptionoption">Redemable once ? If not Redeem Wait Duration</label>
+                        <div class="row">
+                            <div class="dropdown col-5">
+                                <select class="btn btn-secondary btn-sm dropdown-toggle" id="is_redeemable_once" aria-expanded="false" (ngModelChange)="redeemableOnceChange($event)" formControlName="is_redeemable_once">
+                                        <option class="dropdown-item" selected=true disabled="true" hidden="true" [ngValue]=true>Select</option>
+                                        <option class="dropdown-item" [ngValue]=true >Yes</option>
+                                        <option class="dropdown-item" [ngValue]=false>No</option>
+                                </select>
+
+                            </div>
+                            <div *ngIf="!redeemableOnce" class="dropdown col-7">
+                                <select class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="reredemption_wait_time" formControlName="reredemption_wait_time" aria-expanded="false">
+                                    <option class="dropdown-item" [ngValue]=1>1 DAY</option>
+                                    <option class="dropdown-item" [ngValue]=7>1 WEEK</option>
+                                    <option class="dropdown-item" [ngValue]=30>1 MONTH</option>
+                                    <option class="dropdown-item" [ngValue]=365>1 YEAR</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="redemptionoption">Apply an Expiration Date? If Yes Select Date</label>
+                        <div class="row">
+                            <div class="dropdown col-5">
+                                <select class="btn btn-secondary btn-sm dropdown-toggle" id="has_expiration_date" data-toggle="dropdown" (ngModelChange)="hasExipryDateChange($event)" formControlName="has_expiration_date">
+                                    <option class="dropdown-item" selected=true disabled="true" hidden="true" [ngValue]=false >Select</option>
+                                    <option class="dropdown-item" [ngValue]=true >Yes</option>
+                                    <option class="dropdown-item" [ngValue]=false >No</option>
+                                </select>
+                            </div>
+                            <div *ngIf="hasExpiryDate" class="dropdown col-7">
+                                <input type="date" class="form-control btn btn-secondary btn-sm" id="expiration_date" aria-expanded="false" formControlName="expiration_date">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="form-group col"> -->
+                        <!-- <label for="redemptionoption">Expiration Date</label> -->
+                        <!-- <div class="row"> -->
+                            <!-- <input type="date" class="form-control col" id="couponname1" aria-describedby="couponName"> -->
+                            <!-- <div class="dropdown col-2">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button class="dropdown-item" type="button">Action</button>
+                                    <button class="dropdown-item" type="button">Another action</button>
+                                    <button class="dropdown-item" type="button">Something else here</button>
+                                </div>
+                            </div>
+                            <div class="dropdown col-2">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button class="dropdown-item" type="button">Action</button>
+                                    <button class="dropdown-item" type="button">Another action</button>
+                                    <button class="dropdown-item" type="button">Something else here</button>
+                                </div>
+                            </div>
+                            <div class="dropdown col-2">
+                                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown
+        </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <button class="dropdown-item" type="button">Action</button>
+                                    <button class="dropdown-item" type="button">Another action</button>
+                                    <button class="dropdown-item" type="button">Something else here</button>
+                                </div>
+                            </div> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+
+                    <div class="form-group col">
+                        <label for="disable_vote">Allow Vote?</label>
+                        <div class="row">
+                            <div class="dropdown col-4">
+                                <select class="btn btn-secondary btn-sm dropdown-toggle" id="disable_vote" formControlName="disable_vote">
+                                    <option class="dropdown-item" disabled="true" hidden="true" selected="true" [ngValue]=true>Select</option>
+                                    <option class="dropdown-item" [ngValue]=false>Yes</option>
+                                    <option class="dropdown-item" [ngValue]=true>No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="coupon_colorway">Coupon Colorway</label>
+                        <div class="col-7">
+                            <input type="color" class="form-control btn btn-secondary btn-sm" id="coupon_colorway" formControlName="coupon_colorway">
+                        </div>
+                    </div>
+                    <div class="form-group col">
+                        <label for="facebook_pixel_id">Facebook Pixel Id</label>
+                        <input type="text" class="form-control" id="facebook_pixel_id" formControlName="facebook_pixel_id" >
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="header">Header</label>
+                        <input type="text" class="form-control" id="header" formControlName="header">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="offer_image">Offer Image Url</label>
+                        <input type="text" class="form-control" id="offer_image" formControlName="offer_image">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="offer">Offer</label>
+                        <input type="text" class="form-control" id="offer" formControlName="offer">
+                    </div>
+
+                    <div class="form-group col">
+                        <label for="offer_description">Offer Description</label>
+                        <input type="text" class="form-control" id="offer_description" formControlName="offer_description">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="redeem_button_text">Redeem Button Text</label>
+                        <input type="text" class="form-control" id="redeem_button_text" formControlName="redeem_button_text">
+                    </div>
+                    <div class="form-group col">
+                        <label for="fineprint">Fine Print Text</label>
+                        <input type="text" class="form-control" id="fineprint" formControlName="fineprint">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="vote_up_button_text">Vote Up Button Text</label>
+                        <input type="text" class="form-control" id="vote_up_button_text" formControlName="vote_up_button_text">
+                    </div>
+                    <div class="form-group col">
+                        <label for="vote_down_button_text">Vote Down Button Text</label>
+                        <input type="text" class="form-control" id="vote_down_button_text" formControlName="vote_down_button_text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="show_call_link">Show Call Link</label>
+                        <div>
+                            <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_call_link" formControlName="show_call_link" (ngModelChange)="showCallLinkChange($event)">
+                                <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                <option class="dropdown-item" [ngValue]=true>Yes</option>
+                                <option class="dropdown-item" [ngValue]=false>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="callLinkDiv"  class="form-group col-7 hide-div">
+                        <label for="call_number">Call Number</label>
+                        <input type="text" class="form-control" id="call_number" formControlName="call_number">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="show_website_link">Show Website Link</label>
+                        <div>
+                            <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_website_link" formControlName="show_website_link" (ngModelChange)="showWebLinkChange($event)">
+                                <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                <option class="dropdown-item" [ngValue]=true>Yes</option>
+                                <option class="dropdown-item" [ngValue]=false>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="webLinkDiv" class="form-group col-7 hide-div">
+                        <label for="website_address">Website Link</label>
+                        <input type="text" class="form-control" id="website_address" formControlName="website_address">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="show_facebook_link">Show Facebook Link</label>
+                        <div>
+                            <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_facebook_link" formControlName="show_facebook_link" (ngModelChange)="showFBLinkChange($event)">
+                                <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                <option class="dropdown-item" [ngValue]=true>Yes</option>
+                                <option class="dropdown-item" [ngValue]=false>No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="fBLinkDiv" class="form-group col-7 hide-div">
+                        <label for="facebook_url">Facebook Link</label>
+                        <input type="text" class="form-control" id="facebook_url" formControlName="facebook_url">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="show_instagram_link">Show Instagram Link</label>
+                        <div>
+                            <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_instagram_link" formControlName="show_instagram_link" (ngModelChange)="showInstaLinkChange($event)">
+                                <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                <option class="dropdown-item" [ngValue]=true >Yes</option>
+                                <option class="dropdown-item" [ngValue]=false >No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="instaLinkDiv" class="form-group col-7 hide-div">
+                        <label for="instagram_url">Instagram Link</label>
+                        <input type="text" class="form-control" id="instagram_url" formControlName="instagram_url">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="show_direction_link">Show Directions Link</label>
+                        <div>
+                            <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_direction_link" formControlName="show_direction_link" (ngModelChange)="showDirectLinkChange($event)">
+                                <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                <option class="dropdown-item" [ngValue]=true >Yes</option>
+                                <option class="dropdown-item" [ngValue]=false >No</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="directLinkDiv" class="form-group col-7 hide-div">
+                        <label for="direction_url">Directions Link</label>
+                        <input type="text" class="form-control" id="direction_url" formControlName="direction_url">
+                    </div>
+                </div>
+        </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="redemption_type">Redemption Type</label>
+
+                        <div class="dropdown">
+                            <select class="btn btn-secondary btn-sm dropdown-toggle" id="redemption_type" formControlName="redemption_type" (ngModelChange)="redemptionTypeChange($event)">
+                                <option class="dropdown-item" hidden=true disabled=true selected=true ngValue="standard">Select</option>
+                                <option class="dropdown-item" ngValue="standard">Standard</option>
+                                <option class="dropdown-item" ngValue="barcode">Barcode</option>
+                                <option class="dropdown-item" ngValue="image">Image</option>
+                                <option class="dropdown-item" ngValue="redirect">Redirect</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <!-- Options for redemption Types -->
+                <!-- Standard -->
+                <div *ngIf="standardRedemptionType">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="redemption_action">Redemption Action</label>
+                            <input type="text" class="form-control" id="redemption_action" formControlName="redemption_action">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col">
+                            <label for="redemption_code">Redemption Code</label>
+                            <input type="text" class="form-control" id="redemption_code" formControlName="redemption_code">
+                        </div>
+                        <div class="form-group col">
+                            <label for="show_redemption_timer">Show Redemption Timer</label>
+                            <div class="row">
+                                <div class="dropdown col-4">
+                                    <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_redemption_timer" formControlName="show_redemption_timer">
+                                        <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                        <option class="dropdown-item" [ngValue]=true>Yes</option>
+                                        <option class="dropdown-item" [ngValue]=false>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Barcode -->
+                <div *ngIf="barcodeRedemptionType">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="redemption_action">Redemption Action</label>
+                            <input type="text" class="form-control" id="name" formControlName="redemption_action">
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col">
+                            <label for="barcode_format">Barcode Format</label>
+                            <div class="row">
+                                <div class="dropdown col-4">
+                                    <select class="btn btn-secondary btn-sm dropdown-toggle" id="barcode_format" formControlName="barcode_format">
+                                        <option class="dropdown-item" hidden disabled selected ngValue="QR">QR Code</option>
+                                        <option class="dropdown-item" ngValue="QR">QR Code</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col">
+                            <label for="show_redemption_timer">Show Redemption Timer</label>
+                            <div class="row">
+                                <div class="dropdown col-4">
+                                    <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_redemption_timer" formControlName="show_redemption_timer">
+                                        <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                        <option class="dropdown-item" [ngValue]=true>Yes</option>
+                                        <option class="dropdown-item" [ngValue]=false>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="form-group col">
+                            <label for="redemption_code">Redemption Code</label>
+                            <input type="text" class="form-control" id="redemption_code" formControlName="redemption_code">
+                        </div>
+                    </div>
+                </div>
+                <!-- Image -->
+                <div *ngIf="imageRedemptionType">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="redemption_action">Redemption Action</label>
+                            <input type="text" class="form-control" id="redemption_action" formControlName="redemption_action" >
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="redemption_image">Redemption Image Url</label>
+                            <input type="text" class="form-control" id="redemption_image" formControlName="redemption_image">
+                        </div>
+                        <div class="form-group col">
+                            <label for="show_redemption_timer">Show Redemption Timer</label>
+                            <div class="row">
+                                <div class="dropdown col-4">
+                                    <select class="btn btn-secondary btn-sm dropdown-toggle" id="show_redemption_timer" formControlName="show_redemption_timer">
+                                        <option class="dropdown-item" hidden disabled selected [ngValue]=false>Select</option>
+                                        <option class="dropdown-item" [ngValue]=true>Yes</option>
+                                        <option class="dropdown-item"[ngValue]=false>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Redirect Url -->
+                <div *ngIf="redirectRedemptionType">
+                    <div class="row">
+                        <div class="form-group col">
+                            <label for="redirect_url">Redirect Url</label>
+                            <input type="text" class="form-control" id="redirect_url" formControlName="redirect_url" placeholder="http://www.url.com">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col">
+                        <label for="image">Company Image Url</label>
+                        <input type="text" class="form-control" id="image" formControlName="image" placeholder="http://www.url.com">
+                    </div>
+                    <div class="form-group col">
+                        <label for="company_id">Company Id</label>
+                        <input type="text" class="form-control" id="company_id" formControlName="company_id">
+                    </div>
+                </div>
+        <!-- </div> -->
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-success"
+        [disabled]="!myForm.valid">
+        Submit Form
+      </button>
+    </div>
+    
+  </form>
+  

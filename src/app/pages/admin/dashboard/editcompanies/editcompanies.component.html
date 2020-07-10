@@ -1,0 +1,11 @@
+<button (click)="openFormModal()">Add Company</button>
+<ag-grid-angular
+        style="width: 900px; height: 200px;" 
+        class="ag-theme-balham"
+        [columnDefs]="columnDefs"
+        [rowData]="rowData"
+        [frameworkComponents]="frameworkComponents"
+        [gridOptions]="gridOptions"
+        (rowEditingStopped) = "rowUpdated($event)"
+        >
+</ag-grid-angular>

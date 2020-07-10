@@ -1,0 +1,11 @@
+<button (click)="openFormModal()">Add User</button>
+<ag-grid-angular 
+        style="width: 800px; height: 500px; text-align: center;" 
+        class="ag-theme-balham"
+        [gridOptions]="gridOptions"
+        [rowData]="rowData" 
+        [columnDefs]="columnDefs"
+        (rowEditingStopped) = "rowUpdated($event)"
+        [frameworkComponents]="frameworkComponents"
+        >
+</ag-grid-angular>
